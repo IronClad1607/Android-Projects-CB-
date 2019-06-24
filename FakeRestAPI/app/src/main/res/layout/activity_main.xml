@@ -8,7 +8,7 @@
         android:orientation="vertical"
         android:layout_height="250dp"
         android:padding="10dp"
-        tools:context=".MainActivity">
+        tools:context=".allActivities.MainActivity">
 
     <LinearLayout
             android:layout_weight="1"
