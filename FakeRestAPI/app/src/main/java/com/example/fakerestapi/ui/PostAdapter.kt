@@ -24,9 +24,9 @@ class PostAdapter(private val post: List<Posts>, private val user: List<User>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = post[position]
-        val user = user[position % 10]
+        val user = user[position/10]
         holder.bind(post, user)
-        Log.i("CCheck", "$position")
+        Log.i("CCheck", "${post.userId} : ${user.id}")
 
     }
 

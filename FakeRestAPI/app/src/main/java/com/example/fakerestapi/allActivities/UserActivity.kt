@@ -8,8 +8,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fakerestapi.R
+import com.example.fakerestapi.modal.Posts
 import com.example.fakerestapi.modal.User
 import com.example.fakerestapi.network.RetrofitClient
+import com.example.fakerestapi.network.getUsers
 import com.example.fakerestapi.ui.UserAdapter
 import kotlinx.android.synthetic.main.activity_user.*
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +31,7 @@ class UserActivity : AppCompatActivity(),CoroutineScope{
         setContentView(R.layout.activity_user)
 
         launch {
-            val users = getUser()
+            val users = getUsers()
             Log.i("PUI","$users")
             rvUsers.layoutManager = LinearLayoutManager(this@UserActivity,RecyclerView.HORIZONTAL,false)
             rvUsers.adapter = UserAdapter(users,applicationContext)
@@ -39,15 +41,4 @@ class UserActivity : AppCompatActivity(),CoroutineScope{
 
     }
 
-    suspend fun getUser(): List<User> {
-        val userApi = RetrofitClient.userApi
-
-        val response = userApi.getUsers()
-
-        return if (response.isSuccessful) {
-            response.body()!!
-        } else {
-            emptyList()
-        }
-    }
 }

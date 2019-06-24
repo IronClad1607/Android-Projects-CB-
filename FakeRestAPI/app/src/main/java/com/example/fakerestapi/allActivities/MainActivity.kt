@@ -21,5 +21,14 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, PostActivity::class.java)
             startActivity(intent)
         }
+
+        btnComments.setOnClickListener {
+
+        }
+
+        btnTODO.setOnClickListener {
+
+
+        }
     }
 }

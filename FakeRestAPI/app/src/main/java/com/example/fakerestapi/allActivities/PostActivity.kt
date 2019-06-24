@@ -9,6 +9,8 @@ import com.example.fakerestapi.R
 import com.example.fakerestapi.modal.Posts
 import com.example.fakerestapi.modal.User
 import com.example.fakerestapi.network.RetrofitClient
+import com.example.fakerestapi.network.getPosts
+import com.example.fakerestapi.network.getUsers
 import com.example.fakerestapi.ui.PostAdapter
 import kotlinx.android.synthetic.main.activity_post.*
 import kotlinx.coroutines.CoroutineScope
@@ -36,25 +38,5 @@ class PostActivity : AppCompatActivity(), CoroutineScope {
         }
     }
 
-    suspend fun getPosts(): List<Posts> {
-        val userApi = RetrofitClient.userApi
 
-        val responseP = userApi.getPost()
-        return if (responseP.isSuccessful) {
-            responseP.body()!!
-        } else {
-            emptyList()
-        }
-    }
-
-    suspend fun getUsers(): List<User> {
-        val userApi = RetrofitClient.userApi
-
-        val responseU = userApi.getUsers()
-        return if (responseU.isSuccessful) {
-            responseU.body()!!
-        } else {
-            emptyList()
-        }
-    }
 }
