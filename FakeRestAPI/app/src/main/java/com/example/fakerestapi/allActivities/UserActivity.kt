@@ -3,9 +3,13 @@ package com.example.fakerestapi.allActivities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.fakerestapi.R
 import com.example.fakerestapi.modal.User
 import com.example.fakerestapi.network.RetrofitClient
+import com.example.fakerestapi.ui.UserAdapter
+import kotlinx.android.synthetic.main.activity_user.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -25,7 +29,10 @@ class UserActivity : AppCompatActivity(),CoroutineScope {
         launch {
             val users = getUser()
             Log.i("PUI","$users")
+            rvUsers.layoutManager = LinearLayoutManager(this@UserActivity,RecyclerView.HORIZONTAL,false)
+            rvUsers.adapter = UserAdapter(users)
         }
+
 
     }
 
