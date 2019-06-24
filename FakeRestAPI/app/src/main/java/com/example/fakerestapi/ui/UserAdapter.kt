@@ -1,15 +1,20 @@
 package com.example.fakerestapi.ui
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fakerestapi.R
+import com.example.fakerestapi.allActivities.PostActivity
 import com.example.fakerestapi.modal.User
 import kotlinx.android.synthetic.main.cvuser.view.*
 
-class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class UserAdapter(private val users: List<User>,context: Context ) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+
+    var mContext = context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val li = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = li.inflate(R.layout.cvuser, parent, false)
@@ -21,9 +26,22 @@ class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdap
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = users[position]
         holder.bind(user)
+
+        holder.setOnCustomItemClickListener(object : CustomItemClickListener{
+            override fun onCustomItemClickListener(view: View, position: Int) {
+                Toast.makeText(mContext,"Clicked on ${user.id}",Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener{
+        override fun onClick(p0: View?) {
+            this.customItemClickListener!!.onCustomItemClickListener(p0!!,adapterPosition)
+        }
+
+        var customItemClickListener: CustomItemClickListener? = null
         fun bind(user: User) {
             with(itemView) {
                 tvName.text = user.name
@@ -41,6 +59,11 @@ class UserAdapter(private val users: List<User>) : RecyclerView.Adapter<UserAdap
                 tvCP.text = "Catch Pharse:" + user.company.catchPhrase
                 tvBS.text = "BS:" + user.company.bs
             }
+            itemView.setOnClickListener(this)
+        }
+
+        fun setOnCustomItemClickListener(itemClickListener: CustomItemClickListener){
+            this.customItemClickListener =itemClickListener
         }
     }
 }

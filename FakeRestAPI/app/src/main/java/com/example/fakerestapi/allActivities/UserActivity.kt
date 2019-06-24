@@ -3,6 +3,8 @@ package com.example.fakerestapi.allActivities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fakerestapi.R
@@ -16,7 +18,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class UserActivity : AppCompatActivity(),CoroutineScope {
+class UserActivity : AppCompatActivity(),CoroutineScope{
 
     val superviser = SupervisorJob()
     override val coroutineContext: CoroutineContext
@@ -30,7 +32,8 @@ class UserActivity : AppCompatActivity(),CoroutineScope {
             val users = getUser()
             Log.i("PUI","$users")
             rvUsers.layoutManager = LinearLayoutManager(this@UserActivity,RecyclerView.HORIZONTAL,false)
-            rvUsers.adapter = UserAdapter(users)
+            rvUsers.adapter = UserAdapter(users,applicationContext)
+            
         }
 
 
