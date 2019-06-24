@@ -3,6 +3,7 @@ package com.example.fakerestapi.allActivities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.fakerestapi.PostActivity
 import com.example.fakerestapi.R
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -14,6 +15,11 @@ class MainActivity : AppCompatActivity() {
 
         btnUSERS.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnPOSTS.setOnClickListener {
+            val intent = Intent(this,PostActivity::class.java)
             startActivity(intent)
         }
     }
