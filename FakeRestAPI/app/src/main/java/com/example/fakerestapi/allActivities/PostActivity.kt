@@ -28,9 +28,9 @@ class PostActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_post)
 
         launch {
-            val post = getPosts()
             val user = getUsers()
-            Log.i("PCheck", "$post")
+            val post = getPosts()
+
             rvPosts.layoutManager = LinearLayoutManager(this@PostActivity, RecyclerView.VERTICAL, false)
             rvPosts.adapter = PostAdapter(post,user)
         }
