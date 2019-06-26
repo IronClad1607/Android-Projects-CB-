@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnComments.setOnClickListener {
-
+            val intent = Intent(this,CommentsActivity::class.java)
+            startActivity(intent)
         }
 
         btnTODO.setOnClickListener {
