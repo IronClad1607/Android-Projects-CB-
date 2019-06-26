@@ -1,13 +1,12 @@
 package com.example.fakerestapi.allActivities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fakerestapi.R
-import com.example.fakerestapi.network.getPosts
 import com.example.fakerestapi.network.getComments
+import com.example.fakerestapi.network.getPosts
 import com.example.fakerestapi.ui.CommentsAdapter
 import kotlinx.android.synthetic.main.activity_comments.*
 import kotlinx.coroutines.CoroutineScope

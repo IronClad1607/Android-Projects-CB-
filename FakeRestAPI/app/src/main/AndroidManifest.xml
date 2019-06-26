@@ -11,6 +11,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".allActivities.TODOActivity">
+        </activity>
         <activity android:name=".allActivities.CommentsActivity">
         </activity>
         <activity android:name=".allActivities.UserPostActivity">

@@ -1,14 +1,10 @@
 package com.example.fakerestapi.allActivities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fakerestapi.R
-import com.example.fakerestapi.modal.Posts
-import com.example.fakerestapi.modal.User
-import com.example.fakerestapi.network.RetrofitClient
 import com.example.fakerestapi.network.getPosts
 import com.example.fakerestapi.network.getUsers
 import com.example.fakerestapi.ui.PostAdapter

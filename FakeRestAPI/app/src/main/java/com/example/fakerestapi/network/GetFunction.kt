@@ -2,6 +2,7 @@ package com.example.fakerestapi.network
 
 import com.example.fakerestapi.modal.Comments
 import com.example.fakerestapi.modal.Posts
+import com.example.fakerestapi.modal.TodoClass
 import com.example.fakerestapi.modal.User
 
 suspend fun getPosts(): List<Posts> {
@@ -32,6 +33,16 @@ suspend fun getComments(): List<Comments> {
     val responseC = userApi.getComment()
     return if (responseC.isSuccessful) {
         responseC.body()!!
+    } else {
+        emptyList()
+    }
+}
+
+suspend fun getTODOs(): List<TodoClass> {
+    val userApi = RetrofitClient.userApi
+    val responseT = userApi.getTODO()
+    return if (responseT.isSuccessful) {
+        responseT.body()!!
     } else {
         emptyList()
     }
