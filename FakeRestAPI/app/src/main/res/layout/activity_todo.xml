@@ -8,11 +8,12 @@
         tools:context=".allActivities.PostActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPosts"
+            android:id="@+id/rvTODO"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:padding="10dp"
+            android:layout_gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"/>
 </FrameLayout>

@@ -28,5 +28,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        btnTODO.setOnClickListener {
+            val intent = Intent(this,TODOActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
