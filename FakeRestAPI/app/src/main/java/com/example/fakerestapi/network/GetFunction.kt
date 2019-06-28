@@ -28,9 +28,9 @@ suspend fun getUsers(): List<User> {
 }
 
 suspend fun getComments(): List<Comments> {
-    val userApi = RetrofitClient.userApi
+    val userApi = RetrofitClient.commentApi
 
-    val responseC = userApi.getComment()
+    val responseC = userApi.getComments()
     return if (responseC.isSuccessful) {
         responseC.body()!!
     } else {

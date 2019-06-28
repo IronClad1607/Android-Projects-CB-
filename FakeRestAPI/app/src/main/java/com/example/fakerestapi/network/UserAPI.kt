@@ -12,9 +12,6 @@ interface UserAPI {
     @GET("/users")
     suspend fun getUsers(): Response<List<User>>
 
-    @GET("/comments")
-    suspend fun getComment(): Response<List<Comments>>
-
     @GET("/todos")
     suspend fun getTODO(): Response<List<TodoClass>>
 }

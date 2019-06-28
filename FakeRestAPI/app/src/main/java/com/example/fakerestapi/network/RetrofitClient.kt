@@ -10,6 +10,8 @@ object RetrofitClient {
 
     val postAPI = retrofit().create(PostAPI::class.java)
 
+    val commentApi = retrofit().create(CommentAPI::class.java)
+
     private fun retrofit()=Retrofit.Builder()
         .baseUrl("https://jsonplaceholder.typicode.com")
         .addConverterFactory(GsonConverterFactory.create())

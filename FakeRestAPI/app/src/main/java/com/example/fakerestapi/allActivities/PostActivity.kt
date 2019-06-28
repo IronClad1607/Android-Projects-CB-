@@ -45,7 +45,7 @@ class PostActivity : AppCompatActivity(), CoroutineScope {
                     val data = response.body()
 
                     rvPosts.layoutManager = LinearLayoutManager(this@PostActivity, RecyclerView.VERTICAL, false)
-                    rvPosts.adapter = PostAdapter(data!!)
+                    rvPosts.adapter = PostAdapter(data!!,this@PostActivity)
                 }
 
             })
@@ -54,7 +54,7 @@ class PostActivity : AppCompatActivity(), CoroutineScope {
                 val post = getPosts()
 
                 rvPosts.layoutManager = LinearLayoutManager(this@PostActivity, RecyclerView.VERTICAL, false)
-                rvPosts.adapter = PostAdapter(post)
+                rvPosts.adapter = PostAdapter(post,this@PostActivity)
             }
         }
     }
