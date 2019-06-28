@@ -16,7 +16,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class TODOActivity : AppCompatActivity(),CoroutineScope {
+class TODOActivity : AppCompatActivity(), CoroutineScope {
 
     val superviser = SupervisorJob()
     override val coroutineContext: CoroutineContext
@@ -30,9 +30,14 @@ class TODOActivity : AppCompatActivity(),CoroutineScope {
             val todo = getTODOs()
             val user = getUsers()
 
-            rvTODO.layoutManager = GridLayoutManager(this@TODOActivity,5,GridLayoutManager.HORIZONTAL,false)
+            rvTODO.layoutManager = GridLayoutManager(
+                this@TODOActivity,
+                5,
+                GridLayoutManager.HORIZONTAL,
+                false
+            )
 
-            rvTODO.adapter = TODOAdapter(todo,user)
+            rvTODO.adapter = TODOAdapter(todo, user)
         }
     }
 }

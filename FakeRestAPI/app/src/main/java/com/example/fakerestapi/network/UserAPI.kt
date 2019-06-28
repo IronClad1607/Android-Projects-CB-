@@ -9,12 +9,8 @@ import retrofit2.http.GET
 
 interface UserAPI {
 
-
     @GET("/users")
     suspend fun getUsers(): Response<List<User>>
-
-    @GET("/posts")
-    suspend fun getPost(): Response<List<Posts>>
 
     @GET("/comments")
     suspend fun getComment(): Response<List<Comments>>

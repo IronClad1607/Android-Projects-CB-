@@ -18,19 +18,10 @@
 
         <TextView
                 android:textColor="@android:color/black"
-                android:id="@+id/tvUsernameP"
-                tools:text="Username"
-                android:textStyle="bold|italic"
-                android:textSize="20sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed-light"/>
-
-        <TextView
-                android:textColor="@android:color/black"
                 android:id="@+id/tvTitle"
                 tools:text="Title"
-                android:textSize="15sp"
+                android:textSize="20sp"
+                android:textStyle="italic|bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         <TextView

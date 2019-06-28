@@ -6,9 +6,9 @@ import com.example.fakerestapi.modal.TodoClass
 import com.example.fakerestapi.modal.User
 
 suspend fun getPosts(): List<Posts> {
-    val userApi = RetrofitClient.userApi
+    val postApi = RetrofitClient.postAPI
 
-    val responseP = userApi.getPost()
+    val responseP = postApi.getPost()
     return if (responseP.isSuccessful) {
         responseP.body()!!
     } else {
@@ -47,3 +47,4 @@ suspend fun getTODOs(): List<TodoClass> {
         emptyList()
     }
 }
+

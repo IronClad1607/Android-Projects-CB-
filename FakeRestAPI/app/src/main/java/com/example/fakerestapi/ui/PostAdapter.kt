@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fakerestapi.R
 import com.example.fakerestapi.modal.Posts
-import com.example.fakerestapi.modal.User
 import kotlinx.android.synthetic.main.cvposts.view.*
 
-class PostAdapter(private val post: List<Posts>, private val user: List<User>) :
+class PostAdapter(private val post: List<Posts>) :
     RecyclerView.Adapter<PostAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val li = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -24,16 +23,14 @@ class PostAdapter(private val post: List<Posts>, private val user: List<User>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = post[position]
-        val user = user[position / 10]
-        holder.bind(post, user)
-        Log.i("CCheck", "${post.userId} : ${user.id}")
+        holder.bind(post)
+        Log.i("CCheck", "${post.userId}")
 
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(post: Posts, user: User) {
+        fun bind(post: Posts) {
             with(itemView) {
-                tvUsernameP.text = user.username
                 tvTitle.text = post.title
                 tvBody.text = post.body
             }

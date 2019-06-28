@@ -37,7 +37,11 @@ class TODOAdapter(private val todos: List<TodoClass>, private val users: List<Us
             with(itemView) {
                 tvName.text = user.name
                 tvTitle.text = todo.title
-                tvCompleted.text = todo.completed.toString()
+                if (todo.completed) {
+                    tvCompleted.setBackgroundColor(Color.RED)
+                } else {
+                    tvCompleted.setBackgroundColor(Color.BLACK)
+                }
             }
         }
     }
