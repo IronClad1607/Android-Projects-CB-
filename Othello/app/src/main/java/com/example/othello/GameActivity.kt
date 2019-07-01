@@ -6,11 +6,19 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import androidx.core.content.edit
+import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_game.*
 
-class GameActivity : AppCompatActivity() {
+class GameActivity : AppCompatActivity(), View.OnClickListener {
+
+    var btnArray = ArrayList<ArrayList<Button>>()
+    override fun onClick(p0: View?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +40,13 @@ class GameActivity : AppCompatActivity() {
             putString("P2", intent.getStringExtra("P2"))
         }
 
+        createBoard()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        menuInflater.inflate(R.menu.menu_main, menu)
+        inflater.inflate(R.menu.menu_main, menu)
 
         return true
     }
@@ -59,4 +69,32 @@ class GameActivity : AppCompatActivity() {
         }
         else -> super.onOptionsItemSelected(item)
     }
+
+    private fun createBoard() {
+        mainLayout.orientation = LinearLayout.VERTICAL
+        mainLayout.weightSum = 8.0F
+        for (i in 0..7) {
+            val horizontalLayout = LinearLayout(this)
+            horizontalLayout.orientation = LinearLayout.HORIZONTAL
+            horizontalLayout.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0F
+            )
+            for (j in 0..7) {
+                val btn = Button(this)
+                btn.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1.0F
+                )
+                horizontalLayout.addView(btn)
+            }
+
+            mainLayout.addView(horizontalLayout)
+        }
+
+    }
+
+
 }
