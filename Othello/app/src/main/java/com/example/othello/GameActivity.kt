@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_game.*
 
 class GameActivity : AppCompatActivity(), View.OnClickListener {
 
+    var btnRow = ArrayList<Button>()
     var btnArray = ArrayList<ArrayList<Button>>()
     override fun onClick(p0: View?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -42,6 +44,8 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         createBoard()
+
+        Log.d("BtnRow", "${btnRow.size}   ${btnArray[0].size}")
 
     }
 
@@ -82,6 +86,7 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 1.0F
             )
+            btnRow.clear()
             for (j in 0..7) {
                 val btn = Button(this)
                 btn.layoutParams = LinearLayout.LayoutParams(
@@ -89,18 +94,18 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     1.0F
                 )
-                btn.setBackgroundColor(Color.GREEN)
                 if ((i == 3 && j == 3) || (i == 4 && j == 4)) {
                     btn.setBackgroundColor(Color.WHITE)
                 }
-                if ((i == 4 && j == 3) || (i == 3 && j == 4))
-                {
+                if ((i == 4 && j == 3) || (i == 3 && j == 4)) {
                     btn.setBackgroundColor(Color.BLACK)
                 }
-                    horizontalLayout.addView(btn)
+                horizontalLayout.addView(btn)
+                btnRow.add(btn)
             }
 
             mainLayout.addView(horizontalLayout)
+            btnArray.add(btnRow)
         }
 
     }
