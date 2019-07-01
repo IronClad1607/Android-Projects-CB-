@@ -5,19 +5,18 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/holo_purple"
+        android:background="@android:color/holo_green_light"
         tools:context=".MainActivity">
 
     <TextView
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Othello !"
+            android:text="Othello"
             android:gravity="center"
             android:textAllCaps="true"
             android:textSize="50sp"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
             android:fontFamily="casual"
             android:layout_gravity="top|center"
             tools:layout_editor_absoluteX="39dp"
@@ -37,14 +36,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.137"
-            android:layout_marginTop="216dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvName"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/etP1"
+            android:layout_marginTop="420dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintVertical_bias="0"/>
 
     <EditText
             android:id="@+id/etP1"
@@ -54,16 +53,13 @@
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:layout_height="42dp"
-            app:layout_constraintStart_toEndOf="@+id/tv1"
-            android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            android:layout_marginEnd="36dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.432"/>
+            android:layout_marginTop="420dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"/>
 
     <TextView
             android:id="@+id/tv2"
@@ -75,14 +71,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.137"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/tv1"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.131"/>
+            app:layout_constraintVertical_bias="0.096"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/etP2"
+            app:layout_constraintHorizontal_bias="0.514"/>
 
     <EditText
             android:id="@+id/etP2"
@@ -92,27 +88,28 @@
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:layout_height="42dp"
-            app:layout_constraintStart_toEndOf="@+id/tv1"
-            android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            android:layout_marginEnd="36dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.595"/>
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/etP1"
+            app:layout_constraintVertical_bias="0.066"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"/>
 
 
     <Button
             android:id="@+id/btnStart"
-            android:text="Start"
+            android:text="Start Game"
             android:textAllCaps="false"
+            android:padding="10dp"
             android:textSize="25sp"
             android:textStyle="italic"
             android:fontFamily="cursive"
             android:textColor="@android:color/black"
-            android:background="@android:color/holo_orange_light"
+            android:background="@android:color/holo_red_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
