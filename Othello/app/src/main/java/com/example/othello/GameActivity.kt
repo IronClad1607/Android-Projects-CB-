@@ -1,6 +1,7 @@
 package com.example.othello
 
 import android.content.Context
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -88,7 +89,15 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     1.0F
                 )
-                horizontalLayout.addView(btn)
+                btn.setBackgroundColor(Color.GREEN)
+                if ((i == 3 && j == 3) || (i == 4 && j == 4)) {
+                    btn.setBackgroundColor(Color.WHITE)
+                }
+                if ((i == 4 && j == 3) || (i == 3 && j == 4))
+                {
+                    btn.setBackgroundColor(Color.BLACK)
+                }
+                    horizontalLayout.addView(btn)
             }
 
             mainLayout.addView(horizontalLayout)

@@ -48,7 +48,7 @@
     <EditText
             android:id="@+id/etP1"
             android:layout_width="241dp"
-            tools:text="Enter Player 1 Name"
+            tools:hint="Enter Player 1 Name"
             android:fontFamily="sans-serif-condensed-light"
             android:textColor="@android:color/black"
             android:textSize="20sp"
@@ -83,7 +83,7 @@
     <EditText
             android:id="@+id/etP2"
             android:layout_width="241dp"
-            tools:text="Enter Player 2 Name"
+            tools:hint="Enter Player 2 Name"
             android:fontFamily="sans-serif-condensed-light"
             android:textColor="@android:color/black"
             android:textSize="20sp"
