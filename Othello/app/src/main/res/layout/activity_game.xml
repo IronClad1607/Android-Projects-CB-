@@ -3,13 +3,17 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_height="match_parent"
         tools:context=".GameActivity">
     <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbGame"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/Widget.AppCompat.Light.ActionBar">
+            android:background="@color/colorPrimary"
+            android:theme="@style/Widget.AppCompat.Light.ActionBar"
+            app:titleTextColor="@android:color/white">
 
     </androidx.appcompat.widget.Toolbar>
 
