@@ -2,25 +2,29 @@ package com.example.othello
 
 import android.content.Context
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import android.widget.*
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
-import androidx.core.view.get
 import kotlinx.android.synthetic.main.activity_game.*
 
 class GameActivity : AppCompatActivity(), View.OnClickListener {
 
-    var btnRow = ArrayList<Button>()
-    var btnArray = ArrayList<ArrayList<Button>>()
+    var btnRow = ArrayList<CustomButton>()
+    var btnArray = ArrayList<ArrayList<CustomButton>>()
+
+    var gameOver: Boolean = false
+    var blackTurn: Boolean = false
+    var bc: Int = 0
+    var wc: Int = 0
+    var counter: Int = 0
     override fun onClick(p0: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +47,17 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
             putString("P2", intent.getStringExtra("P2"))
         }
 
-        createBoard()
+        gameOver = false
+        blackTurn = true
+        wc = 2
+        bc = 2
 
-        Log.d("BtnRow", "${btnRow.size}   ${btnArray[0].size}")
+        createBoard()
+        updateBoard()
+
+
+        tvScoreP1.text = bc.toString()
+        tvScoreP2.text = wc.toString()
 
     }
 
@@ -88,18 +100,22 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
             )
             btnRow.clear()
             for (j in 0..7) {
-                val btn = Button(this)
+                val btn = CustomButton(this)
                 btn.layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     1.0F
                 )
+
+                btnArray[i][j].setX(i)
+                btnArray[i][j].setY(j)
                 if ((i == 3 && j == 3) || (i == 4 && j == 4)) {
                     btn.setBackgroundColor(Color.WHITE)
                 }
                 if ((i == 4 && j == 3) || (i == 3 && j == 4)) {
                     btn.setBackgroundColor(Color.BLACK)
                 }
+                btn.setOnClickListener(this)
                 horizontalLayout.addView(btn)
                 btnRow.add(btn)
             }
@@ -110,5 +126,191 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+
+    private fun updateBoard() {
+        counter = 0
+        var valid: Int = 0
+        var i: Int
+        var j: Int
+        var flag: Boolean
+        for (olc in 0..7) {
+            for (ilc in 0..7) {
+                if (btnArray[olc][ilc].clicked)
+                    continue
+                if (blackTurn) {
+                    i = olc + 1
+                    j = ilc + 1
+                    flag = false
+                    valid = 0
+
+                    //Diagonal Right - Down
+                    while (i < 8 && j < 8 && btnArray[i][j].clicked) {
+                        if (btnArray[i][j].black && valid == 0) {
+                            break
+                        }
+                        if (!btnArray[i][j].black) {
+                            valid = 1
+                        }
+                        if (valid == 1 && btnArray[i][j].black) {
+                            flag = true
+                            break
+                        }
+                        i++
+                        j++
+                    }
+                    i = olc - 1
+                    j = ilc - 1
+                    valid = 0
+
+                    //Up Left
+                    while (i >= 0 && j >= 0 && !flag && btnArray[i][j].clicked) {
+                        if (btnArray[i][j].black && valid == 0) {
+                            break
+                        }
+                        if (!btnArray[i][j].black)
+                            valid = 1
+                        if (valid == 1 && btnArray[i][j].black) {
+                            flag = true
+                            break
+                        }
+                        i--
+                        j++
+                    }
+                    i = olc - 1
+                    j = ilc + 1
+                    valid = 0
+                    //Up Right
+                    while (i >= 0 && j < 8 && !flag && btnArray[i][j].clicked) {
+                        if (btnArray[i][j].black && valid == 0) {
+                            break
+                        }
+                        if (!btnArray[i][j].black) {
+                            valid = 1
+                        }
+                        if (valid == 1 && btnArray[i][j].black) {
+                            flag = true
+                            break
+                        }
+                        i--
+                        j++
+                    }
+                    i = olc + 1
+                    j = ilc - 1
+                    //Down Left
+                    while (i < 8 && j >= 0 && !flag && btnArray[i][j].clicked) {
+                        if (btnArray[i][j].black && valid == 0) {
+                            break
+                        }
+                        if (!btnArray[i][j].black)
+                            valid = 1
+                        if (valid == 1 && btnArray[i][j].black) {
+                            flag = true
+                            break
+                        }
+                        i++
+                        j--
+                    }
+                    i = olc - 1
+                    j = ilc
+                    valid = 0
+
+                    //Up
+                    while (i >= 0 && !flag && btnArray[i][j].clicked) {
+                        if (btnArray[i][j].black && valid == 0) {
+                            break
+                        }
+                        if (!btnArray[i][j].black)
+                            valid = 1
+                        if (valid == 1 && btnArray[i][j].black) {
+                            flag = true
+                            break
+                        }
+                        i--
+                    }
+                    i = olc + 1
+                    j = ilc
+                    valid = 0
+
+                    //Down
+                    while (i < 8 && !flag && btnArray[i][j].clicked) {
+                        if (btnArray[i][j].black && valid == 0) {
+                            break
+                        }
+                        if (!btnArray[i][j].black)
+                            valid = 1
+                        if (valid == 1 && btnArray[i][j].black) {
+                            flag == true
+                            break
+                        }
+                        i++
+                    }
+                    i = olc
+                    j = ilc - 1
+                    valid = 0
+
+                    //Left
+                    while (j >= 0 && !flag && btnArray[i][j].clicked) {
+                        if (btnArray[i][j].black && valid == 0) {
+                            break
+                        }
+                        if (!btnArray[i][j].black)
+                            valid == 1
+                        if (valid == 1 && btnArray[i][j].black) {
+                            flag == true
+                            break
+                        }
+                        j--
+                    }
+                    i = olc
+                    j = ilc + 1
+                    valid = 0
+
+
+                    //Right
+                    while (j < 8 && !flag && btnArray[i][j].clicked) {
+                        if (btnArray[i][j].black && valid == 0) {
+                            break
+                        }
+                        if (!btnArray[i][j].black)
+                            valid == 1
+                        if (valid == 1 && btnArray[i][j].black) {
+                            flag = true
+                            break
+                        }
+                        j++
+                    }
+                } else {
+                    i = olc + 1
+                    j = ilc + 1
+                    flag = false
+
+                    //Diagonal Right Down
+                    while(i<8 && j<8 && btnArray[i][j].clicked)
+                    {
+                        if(!btnArray[i][j].black && valid == 0 )
+                        {
+                            break
+                        }
+                        if(btnArray[i][j].black)
+                            valid =1
+                        if(valid == 1 && !btnArray[i][j].black)
+                        {
+                            flag = true
+                            break
+                        }
+                        i++
+                        j++
+                    }
+
+                    i = olc - 1
+                    j = ilc - 1
+                    valid = 0
+
+                    //Up Left
+                    while ()
+                }
+            }
+        }
+    }
 
 }
