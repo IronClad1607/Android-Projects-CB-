@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
             tasks = TasksTable.sortTask(tasksDB)
             todoAdapter.updateTasks(tasks)
         }
+
     }
 
 
