@@ -3,7 +3,7 @@ package com.example.todoappminor
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 
-class TodoTable {
+class TasksTable {
 
     data class Task(
         val id: Int?,
@@ -12,21 +12,23 @@ class TodoTable {
     )
 
     companion object {
-        val TABLE_NAME = "todo"
+
+        val TABLE_NAME = "tasks"
 
         val CMD_CREATE_TABLE = """
-           CREATE TABLE $TABLE_NAME (
-           id INTEGER PRIMARY KEY AUTOINCREMENT,
-           task TEXT,
-           done BOOLEAN
-           );
+            CREATE TABLE $TABLE_NAME (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            task TEXT,
+            done BOOLEAN
+            );
         """.trimIndent()
 
-        fun insertTask(db: SQLiteDatabase, task: Task) {
+
+        fun insertTasks(db: SQLiteDatabase, task: Task) {
             val taskRow = ContentValues()
+
             taskRow.put("task", task.task)
             taskRow.put("done", task.done)
-
 
             db.insert(TABLE_NAME, null, taskRow)
         }
@@ -38,33 +40,33 @@ class TodoTable {
                 TABLE_NAME,
                 arrayOf("id", "task", "done"),
                 null,
-                null, //where
-                null, // group by
-                null, //having
-                null //order
+                null,
+                null,
+                null,
+                null
             )
 
-
             cursor.moveToFirst()
+
 
             val idCol = cursor.getColumnIndex("id")
             val taskCol = cursor.getColumnIndex("task")
             val doneCol = cursor.getColumnIndex("done")
 
 
-            while (cursor.moveToNext()) {
+            while (cursor.moveToNext()){
                 val task = Task(
                     cursor.getInt(idCol),
                     cursor.getString(taskCol),
                     cursor.getInt(doneCol) == 1
                 )
 
+
                 tasks.add(task)
             }
 
             cursor.close()
             return tasks
-
         }
     }
 }

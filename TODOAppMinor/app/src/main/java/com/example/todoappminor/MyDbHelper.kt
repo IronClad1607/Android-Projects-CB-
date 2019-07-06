@@ -11,7 +11,7 @@ class MyDbHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB
     override fun onCreate(p0: SQLiteDatabase?) {
 
         p0?.apply {
-            execSQL(TodoTable.CMD_CREATE_TABLE)
+            execSQL(TasksTable.CMD_CREATE_TABLE)
         }
     }
 

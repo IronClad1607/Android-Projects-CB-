@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var tasks = arrayListOf<TodoTable.Task>()
+    var tasks = arrayListOf<TasksTable.Task>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         val tasksDB = dbHelper.writableDatabase
 
 
-        tasks = TodoTable.getAllTasks(tasksDB)
+        tasks = TasksTable.getAllTasks(tasksDB)
 
 
         val todoAdapter = TODOAdapter(tasks)
@@ -32,25 +32,24 @@ class MainActivity : AppCompatActivity() {
 
 
         btnADD.setOnClickListener {
-            TodoTable.insertTask(
-                tasksDB, TodoTable.Task(
-                    null,
-                    etTask.text.toString(),
-                    false
-                )
-            )
+            TasksTable.insertTasks(tasksDB, TasksTable.Task(
+                null,
+                etTask.text.toString(),
+                false
+            ))
 
-            tasks = TodoTable.getAllTasks(tasksDB)
-
+            tasks = TasksTable.getAllTasks(tasksDB)
             todoAdapter.updateTasks(tasks)
+
+            etTask.text.clear()
         }
 
     }
 
 
-    class TODOAdapter(var tasks: ArrayList<TodoTable.Task>) : BaseAdapter() {
+    class TODOAdapter(var tasks: ArrayList<TasksTable.Task>) : BaseAdapter() {
 
-        fun updateTasks(newTasks: ArrayList<TodoTable.Task>) {
+        fun updateTasks(newTasks: ArrayList<TasksTable.Task>) {
             tasks.clear()
             tasks.addAll(newTasks)
             notifyDataSetChanged()
@@ -66,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             return view
         }
 
-        override fun getItem(position: Int): TodoTable.Task = tasks[position]
+        override fun getItem(position: Int): TasksTable.Task = tasks[position]
 
         override fun getItemId(position: Int): Long = 0
 
