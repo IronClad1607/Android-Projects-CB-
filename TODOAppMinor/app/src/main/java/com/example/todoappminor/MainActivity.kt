@@ -13,6 +13,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_todo.view.*
+import android.widget.CheckBox as CheckBox
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,6 +50,10 @@ class MainActivity : AppCompatActivity() {
             etTask.text.clear()
         }
 
+        btnSort.setOnClickListener {
+            tasks = TasksTable.sortTask(tasksDB)
+            todoAdapter.updateTasks(tasks)
+        }
     }
 
 
@@ -78,9 +83,16 @@ class MainActivity : AppCompatActivity() {
                 val thisTask = getItem(position)
                 TasksTable.deleteCrossTask(db, thisTask)
                 tasks = TasksTable.getAllTasks(db)
+                updateTasks(tasks)
             }
 
-
+            view.findViewById<CheckBox>(R.id.cbDone).setOnClickListener {
+                val thisTask = getItem(position)
+                thisTask.done = !thisTask.done
+                TasksTable.updateTask(db, thisTask)
+                tasks = TasksTable.getAllTasks(db)
+                updateTasks(tasks)
+            }
             return view
         }
 
