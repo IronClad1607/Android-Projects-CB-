@@ -24,8 +24,145 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
     var bc: Int = 0
     var wc: Int = 0
     var counter: Int = 0
+
     override fun onClick(p0: View?) {
 
+        val button = p0 as CustomButton
+        if (button.clicked || gameOver || !button.isCanClicked)
+            return
+        if (blackTurn) {
+            button.black = true
+            button.clicked = true
+            button.setBackgroundColor(Color.BLACK)
+            bc++
+        } else {
+            button.setBackgroundColor(Color.WHITE)
+            button.black = false
+            button.clicked = true
+            wc++
+        }
+
+        if (blackTurn) {
+            checkBlack(button.atX, button.atY)
+        } else {
+            checkWhite(button.atX, button.atY)
+        }
+
+        button.clicked = true
+
+        tvScoreP1.text = bc.toString()
+        tvScoreP2.text = wc.toString()
+
+        blackTurn = !blackTurn
+        counter = updateBoard(btnArray, blackTurn)
+        if (counter == 0) {
+            blackTurn = !blackTurn
+            counter = updateBoard(btnArray, blackTurn)
+            if (counter == 0) {
+                gameOver = true
+                if (bc > wc) {
+                    Toast.makeText(this, "Black Won!!", Toast.LENGTH_LONG).show()
+                } else if (wc > bc) {
+                    Toast.makeText(this, "White Won!!", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "Draw!!", Toast.LENGTH_LONG).show()
+                }
+            } else
+                Toast.makeText(this, "Pass!!", Toast.LENGTH_SHORT).show()
+
+        }
+    }
+
+    private fun checkWhite(row: Int, col: Int) {
+        var i: Int
+        var j: Int
+        var count: Int
+
+
+        //Up
+        i = row - 1
+        j = col
+        count = 0
+        while (i >= 0 && btnArray[i][j].clicked && !btnArray[i][j].black) {
+            count++
+            i--
+        }
+        if ((i >= 0 && i < 8 && j >= 0 && j < 8 && !btnArray[i][j].clicked) || !(i >= 0 && i < 8 && j >= 0 && j < 8)) {
+            count = 0
+        }
+        bc += count
+        wc -= count
+        while (count > 0) {
+            btnArray[row - count][col].setBackgroundColor(Color.BLACK)
+            btnArray[row - count][col].black = true
+            count--
+        }
+
+
+        //Down
+        i = row + 1
+        j = col
+        count = 0
+        while (i < 8 && btnArray[i][j].clicked && !btnArray[i][j].black) {
+            count++
+            i++
+        }
+        if ((i >= 0 && i < 8 && j >= 0 && j < 8 && !btnArray[i][j].clicked) || !(i >= 0 && i < 8 && j >= 0 && j < 8)) {
+            count = 0
+        }
+        bc += count
+        wc -= count
+        while (count > 0) {
+            btnArray[row - count][col].setBackgroundColor(Color.BLACK)
+            btnArray[row - count][col].black = true
+            count--
+        }
+
+        //Left
+        i = row
+        j = col -1
+        count = 0
+        while (j >= 0 && btnArray[i][j].clicked && !btnArray[i][j].black) {
+            count++
+            j--
+        }
+        if ((i >= 0 && i < 8 && j >= 0 && j < 8 && !btnArray[i][j].clicked) || !(i >= 0 && i < 8 && j >= 0 && j < 8)) {
+            count = 0
+        }
+        bc += count
+        wc -= count
+        while (count > 0) {
+            btnArray[row - count][col].setBackgroundColor(Color.BLACK)
+            btnArray[row - count][col].black = true
+            count--
+        }
+
+        //Right
+        i = row
+        j = col + 1
+        count = 0
+        while (j <8  && btnArray[i][j].clicked && !btnArray[i][j].black)
+        {
+            count++
+            j++
+        }
+        if ((i >= 0 && i < 8 && j >= 0 && j < 8 && !btnArray[i][j].clicked) || !(i >= 0 && i < 8 && j >= 0 && j < 8))
+        {
+            count = 0
+        }
+        bc += count
+        wc -= count
+        while (count > 0)
+        {
+            btnArray[row - count][col].setBackgroundColor(Color.BLACK)
+            btnArray[row - count][col].black = true
+            count--
+        }
+
+    }
+
+    private fun checkBlack(row: Int, col: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,8 +245,6 @@ class GameActivity : AppCompatActivity(), View.OnClickListener {
                     1.0F
                 )
 
-                btnArray[i][j].setX(i)
-                btnArray[i][j].setY(j)
                 if ((i == 3 && j == 3) || (i == 4 && j == 4)) {
                     btn.setBackgroundColor(Color.WHITE)
                 }
