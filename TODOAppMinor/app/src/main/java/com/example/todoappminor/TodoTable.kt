@@ -8,7 +8,7 @@ class TasksTable {
     data class Task(
         val id: Int?,
         val task: String,
-        val done: Boolean
+        var done: Boolean
     )
 
     companion object {
@@ -31,6 +31,15 @@ class TasksTable {
             taskRow.put("done", task.done)
 
             db.insert(TABLE_NAME, null, taskRow)
+        }
+
+        fun deleteCrossTask(db: SQLiteDatabase,task: Task){
+            val taskRow = ContentValues()
+
+            taskRow.put("task", task.task)
+            taskRow.put("done", task.done)
+
+            db.delete(TABLE_NAME,"id = ?", arrayOf(task.id.toString()))
         }
 
         fun getAllTasks(db: SQLiteDatabase): ArrayList<Task> {

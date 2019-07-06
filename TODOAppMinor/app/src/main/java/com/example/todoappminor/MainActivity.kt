@@ -1,15 +1,18 @@
 package com.example.todoappminor
 
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
-import android.widget.BaseAdapter
-import android.widget.TextView
+import android.widget.*
+import android.widget.AdapterView.OnItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.list_todo.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,16 +30,18 @@ class MainActivity : AppCompatActivity() {
         tasks = TasksTable.getAllTasks(tasksDB)
 
 
-        val todoAdapter = TODOAdapter(tasks)
+        val todoAdapter = TODOAdapter(tasks,tasksDB)
         lvTODO.adapter = todoAdapter
 
 
         btnADD.setOnClickListener {
-            TasksTable.insertTasks(tasksDB, TasksTable.Task(
-                null,
-                etTask.text.toString(),
-                false
-            ))
+            TasksTable.insertTasks(
+                tasksDB, TasksTable.Task(
+                    null,
+                    etTask.text.toString(),
+                    false
+                )
+            )
 
             tasks = TasksTable.getAllTasks(tasksDB)
             todoAdapter.updateTasks(tasks)
@@ -47,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    class TODOAdapter(var tasks: ArrayList<TasksTable.Task>) : BaseAdapter() {
+    class TODOAdapter(var tasks: ArrayList<TasksTable.Task>, private val db:SQLiteDatabase) : BaseAdapter() {
 
         fun updateTasks(newTasks: ArrayList<TasksTable.Task>) {
             tasks.clear()
@@ -57,9 +62,23 @@ class MainActivity : AppCompatActivity() {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val li = parent!!.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view = li.inflate(R.layout.list_todo, parent, false)
+            val view = convertView ?: li.inflate(R.layout.list_todo, parent, false)
 
             view.findViewById<TextView>(R.id.tvTask).text = getItem(position).task
+
+            if (getItem(position).done) {
+                view.findViewById<TextView>(R.id.tvTask).setTextColor(Color.RED)
+                view.findViewById<CheckBox>(R.id.cbDone).isChecked = true
+            } else {
+                view.findViewById<TextView>(R.id.tvTask).setTextColor(Color.BLACK)
+                view.findViewById<CheckBox>(R.id.cbDone).isChecked = false
+            }
+
+            view.findViewById<Button>(R.id.btnCross).setOnClickListener {
+                val thisTask = getItem(position)
+                TasksTable.deleteCrossTask(db, thisTask)
+                tasks = TasksTable.getAllTasks(db)
+            }
 
 
             return view
