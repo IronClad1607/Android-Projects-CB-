@@ -55,6 +55,13 @@ class MainActivity : AppCompatActivity() {
             todoAdapter.updateTasks(tasks)
         }
 
+
+        btnDelete.setOnClickListener {
+            TasksTable.deleteDoneTask(tasksDB)
+            val newTaskList = TasksTable.getAllTasks(tasksDB)
+            todoAdapter.updateTasks(newTaskList)
+        }
+
     }
 
 
@@ -83,16 +90,16 @@ class MainActivity : AppCompatActivity() {
             view.findViewById<Button>(R.id.btnCross).setOnClickListener {
                 val thisTask = getItem(position)
                 TasksTable.deleteCrossTask(db, thisTask)
-                tasks = TasksTable.getAllTasks(db)
-                updateTasks(tasks)
+                val newTaskList = TasksTable.getAllTasks(db)
+                updateTasks(newTaskList)
             }
 
             view.findViewById<CheckBox>(R.id.cbDone).setOnClickListener {
                 val thisTask = getItem(position)
                 thisTask.done = !thisTask.done
                 TasksTable.updateTask(db, thisTask)
-                tasks = TasksTable.getAllTasks(db)
-                updateTasks(tasks)
+                val newTaskList = TasksTable.getAllTasks(db)
+                updateTasks(newTaskList)
             }
             return view
         }

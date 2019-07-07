@@ -43,14 +43,9 @@ class TasksTable {
         }
 
 
-        fun deleteDoneTask(db: SQLiteDatabase,task: Task)
+        fun deleteDoneTask(db: SQLiteDatabase)
         {
-            val taskRow = ContentValues()
-
-            taskRow.put("task", task.task)
-            taskRow.put("done", task.done)
-
-            db.delete(TABLE_NAME,"done = true",null)
+            db.delete(TABLE_NAME,"done = 1",null)
         }
 
         fun sortTask(db: SQLiteDatabase): ArrayList<Task> {
