@@ -33,19 +33,18 @@ class TasksTable {
             db.insert(TABLE_NAME, null, taskRow)
         }
 
-        fun deleteCrossTask(db: SQLiteDatabase,task: Task){
+        fun deleteCrossTask(db: SQLiteDatabase, task: Task) {
             val taskRow = ContentValues()
 
             taskRow.put("task", task.task)
             taskRow.put("done", task.done)
 
-            db.delete(TABLE_NAME,"id = ?", arrayOf(task.id.toString()))
+            db.delete(TABLE_NAME, "id = ?", arrayOf(task.id.toString()))
         }
 
 
-        fun deleteDoneTask(db: SQLiteDatabase)
-        {
-            db.delete(TABLE_NAME,"done = 1",null)
+        fun deleteDoneTask(db: SQLiteDatabase) {
+            db.delete(TABLE_NAME, "done = 1", null)
         }
 
         fun sortTask(db: SQLiteDatabase): ArrayList<Task> {
@@ -54,7 +53,7 @@ class TasksTable {
 
             val cursor = db.query(
                 TABLE_NAME,
-                arrayOf("id","task","done"),
+                arrayOf("id", "task", "done"),
                 null,
                 null,
                 null,
@@ -70,7 +69,43 @@ class TasksTable {
             val doneCol = cursor.getColumnIndex("done")
 
 
-            while (cursor.moveToNext()){
+            while (cursor.moveToNext()) {
+                val task = Task(
+                    cursor.getInt(idCol),
+                    cursor.getString(taskCol),
+                    cursor.getInt(doneCol) == 1
+                )
+
+
+                tasks.add(task)
+            }
+
+            cursor.close()
+            return tasks
+        }
+
+        fun searchQuery(db: SQLiteDatabase, search: String): ArrayList<Task> {
+            val tasks = ArrayList<Task>()
+
+            val cursor = db.query(
+                TABLE_NAME,
+                arrayOf("id", "task", "done"),
+                "task LIKE '%search%'",
+                null,
+                null,
+                null,
+                null
+            )
+
+            cursor.moveToFirst()
+
+
+            val idCol = cursor.getColumnIndex("id")
+            val taskCol = cursor.getColumnIndex("task")
+            val doneCol = cursor.getColumnIndex("done")
+
+
+            while (cursor.moveToNext()) {
                 val task = Task(
                     cursor.getInt(idCol),
                     cursor.getString(taskCol),
@@ -115,7 +150,7 @@ class TasksTable {
             val doneCol = cursor.getColumnIndex("done")
 
 
-            while (cursor.moveToNext()){
+            while (cursor.moveToNext()) {
                 val task = Task(
                     cursor.getInt(idCol),
                     cursor.getString(taskCol),
