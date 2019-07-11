@@ -1,21 +1,10 @@
 package com.example.todoappminor
 
-import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewParent
-import android.widget.*
-import android.widget.AdapterView.OnItemClickListener
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.list_todo.view.*
-import android.widget.CheckBox as CheckBox
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,7 +22,21 @@ class MainActivity : AppCompatActivity() {
         tasks = TasksTable.getAllTasks(tasksDB)
 
 
-        val todoAdapter = TODOAdapter(tasks,tasksDB)
+        val todoAdapter = TODOAdapter(tasks)
+        todoAdapter.listItemClickListener = object :ListViewListener{
+            override fun btnDeleteClick(task: TasksTable.Task, position: Int) {
+                TasksTable.deleteCrossTask(tasksDB, task)
+                val newTaskList = TasksTable.getAllTasks(tasksDB)
+                todoAdapter.updateTasks(newTaskList)
+            }
+
+            override fun checkboxClick(task: TasksTable.Task, position: Int) {
+                task.done = !task.done
+                TasksTable.updateTask(tasksDB, task)
+                val newTaskList = TasksTable.getAllTasks(tasksDB)
+                todoAdapter.updateTasks(newTaskList)            }
+
+        }
         lvTODO.adapter = todoAdapter
 
 
@@ -82,50 +85,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    class TODOAdapter(var tasks: ArrayList<TasksTable.Task>, private val db:SQLiteDatabase) : BaseAdapter() {
 
-        fun updateTasks(newTasks: ArrayList<TasksTable.Task>) {
-            tasks.clear()
-            tasks.addAll(newTasks)
-            notifyDataSetChanged()
-        }
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val li = parent!!.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view = convertView ?: li.inflate(R.layout.list_todo, parent, false)
-
-            view.findViewById<TextView>(R.id.tvTask).text = getItem(position).task
-
-            if (getItem(position).done) {
-                view.findViewById<TextView>(R.id.tvTask).setTextColor(Color.RED)
-                view.findViewById<CheckBox>(R.id.cbDone).isChecked = true
-            } else {
-                view.findViewById<TextView>(R.id.tvTask).setTextColor(Color.BLACK)
-                view.findViewById<CheckBox>(R.id.cbDone).isChecked = false
-            }
-
-            view.findViewById<Button>(R.id.btnCross).setOnClickListener {
-                val thisTask = getItem(position)
-                TasksTable.deleteCrossTask(db, thisTask)
-                val newTaskList = TasksTable.getAllTasks(db)
-                updateTasks(newTaskList)
-            }
-
-            view.findViewById<CheckBox>(R.id.cbDone).setOnClickListener {
-                val thisTask = getItem(position)
-                thisTask.done = !thisTask.done
-                TasksTable.updateTask(db, thisTask)
-                val newTaskList = TasksTable.getAllTasks(db)
-                updateTasks(newTaskList)
-            }
-            return view
-        }
-
-        override fun getItem(position: Int): TasksTable.Task = tasks[position]
-
-        override fun getItemId(position: Int): Long = 0
-
-        override fun getCount(): Int = tasks.size
-
-    }
 }
